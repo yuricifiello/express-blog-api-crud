@@ -16,7 +16,7 @@ const show = (req, res) => {
       message: "Post non trovato",
     });
   }
-  res.json(pizza);
+  res.json(post);
 };
 
 // CREATE
@@ -35,7 +35,7 @@ const destroy = (req, res) => {
   const id = parseInt(req.params.id);
   const post = posts.find((post) => post.id === id);
 
-  if (!pizza) {
+  if (!post) {
     res.status(404);
 
     return res.json({
