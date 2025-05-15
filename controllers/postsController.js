@@ -43,8 +43,28 @@ const store = (req, res) => {
 
 // UPDATE
 const update = (req, res) => {
-  const id = req.params.id;
-  res.send(`Modifica del post ` + id);
+  // recuperiamo l'id dall' URL e trasformiamolo in numero
+  const id = parseInt(req.params.id);
+  // cerchiamo il pizza tramite id
+  const post = posts.find((post) => post.id === id);
+  // Piccolo controllo
+  if (!post) {
+    res.status(404);
+    res.json({
+      error: "404 Not Found",
+      message: "Post non trovata",
+    });
+    return;
+  }
+  // Aggiorniamo la pizza
+  post.title = req.body.title;
+  post.image = req.body.image;
+  post.content = req.body.content;
+  post.tags = req.body.tags;
+  // Controlliamo il menu
+  console.log(posts);
+  // Restituiamo la pizza appena aggiornata
+  res.json(post);
 };
 
 // DELETE
