@@ -1,4 +1,4 @@
-const posts = require("../data/posts");
+const { posts } = require("../data/posts");
 
 // INDEX
 const index = (req, res) => {
@@ -21,7 +21,23 @@ const show = (req, res) => {
 
 // CREATE
 const store = (req, res) => {
-  res.send("Creazione di un nuovo post");
+  // Creiamo un nuovo id incrementando l'ultimo id presente
+  const newId = posts[posts.length - 1].id + 1;
+  // Creiamo un nuovo oggetto pizza
+  const newPost = {
+    id: newId,
+    title: req.body.title,
+    image: req.body.image,
+    content: req.body.content,
+    tags: req.body.tags,
+  };
+  // Aggiungiamo la nuova pizza al menu
+  posts.push(newPost);
+  // controlliamo
+  console.log(posts);
+
+  // Restituiamo lo status corretto e la pizza appena creata
+  res.status(201).json(newPost);
 };
 
 // UPDATE
@@ -45,7 +61,7 @@ const destroy = (req, res) => {
     });
   }
 
-  posts.splice(posts.indexof(post), 1);
+  posts.splice(posts.indexOf(post), 1);
   console.log(posts);
   res.sendStatus(204);
 };
