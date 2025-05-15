@@ -21,6 +21,7 @@ const show = (req, res) => {
 
 // CREATE
 const store = (req, res) => {
+  console.log("Dati ricevuti:", req.body);
   // Creiamo un nuovo id incrementando l'ultimo id presente
   const newId = posts[posts.length - 1].id + 1;
   // Creiamo un nuovo oggetto pizza
