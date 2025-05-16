@@ -5,6 +5,11 @@ const index = (req, res) => {
   res.json(posts);
 };
 
+// # TEST ERRORE INTERNO 500
+// const index = (req, res) => {
+// throw new Error("Errore interno di test");
+// };
+
 // SHOW
 const show = (req, res) => {
   const id = parseInt(req.params.id);
