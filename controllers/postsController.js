@@ -1,8 +1,9 @@
-const { posts } = require("../data/posts");
+const { posts } = require("../data/posts"); //  IMPORTARE ARRAY POSTS
 
-// INDEX
+// INDEX ==
 const index = (req, res) => {
-  res.json(posts);
+  //LEGGE RICHIESTA REQ
+  res.json(posts); //RISPONDE CON TUTTI I POSTO CONVERTITI IN JSON
 };
 
 // # TEST ERRORE INTERNO 500
@@ -12,24 +13,23 @@ const index = (req, res) => {
 
 // SHOW
 const show = (req, res) => {
-  const id = parseInt(req.params.id);
-  const post = posts.find((post) => post.id === id);
+  const id = parseInt(req.params.id); // prendiamo id dall'url e convertire in numero
+  const post = posts.find((post) => post.id === id); // si cerca un post che ha quell'id
 
   if (!post) {
     return res.json({
       error: "Not found",
       message: "Post non trovato",
     });
-  }
-  res.json(post);
+  } // se non lo troviamo restituiamo un messaggio d'errore
+  res.json(post); //altriemnti restituiamo il post trovato
 };
 
 // CREATE
 const store = (req, res) => {
-  console.log("Dati ricevuti:", req.body);
-  // Creiamo un nuovo id incrementando l'ultimo id presente
-  const newId = posts[posts.length - 1].id + 1;
-  // Creiamo un nuovo oggetto pizza
+  console.log("Dati ricevuti:", req.body); //stampiamo i dati ricevutinel corpo della richiesta
+  const newId = posts[posts.length - 1].id + 1; // generiamo un nuovo id incrementando l'ultimo id presente
+  // Creiamo un nuovo oggetto post
   const newPost = {
     id: newId,
     title: req.body.title,
@@ -37,20 +37,17 @@ const store = (req, res) => {
     content: req.body.content,
     tags: req.body.tags,
   };
-  // Aggiungiamo la nuova pizza al menu
+  // Aggiungiamo il nuovo post all'array e lo stampiamo
   posts.push(newPost);
-  // controlliamo
   console.log(posts);
 
-  // Restituiamo lo status corretto e la pizza appena creata
+  // Restituiamo il nuovo post e lo status 201
   res.status(201).json(newPost);
 };
 
 // UPDATE
 const update = (req, res) => {
-  // recuperiamo l'id dall' URL e trasformiamolo in numero
   const id = parseInt(req.params.id);
-  // cerchiamo il pizza tramite id
   const post = posts.find((post) => post.id === id);
   // Piccolo controllo
   if (!post) {
@@ -61,14 +58,13 @@ const update = (req, res) => {
     });
     return;
   }
-  // Aggiorniamo la pizza
+  // Aggiorniamo le propietà del post
   post.title = req.body.title;
   post.image = req.body.image;
   post.content = req.body.content;
   post.tags = req.body.tags;
-  // Controlliamo il menu
+  // stampiamo l'elenco aggiornato e restituiamo il post modificato
   console.log(posts);
-  // Restituiamo la pizza appena aggiornata
   res.json(post);
 };
 
@@ -86,7 +82,7 @@ const destroy = (req, res) => {
       message: "Post non trovato",
     });
   }
-
+  // RIMUOVIAMO IL POST DELL'ARRAY, STAMPIAMO E RESTITUIAMO 204
   posts.splice(posts.indexOf(post), 1);
   console.log(posts);
   res.sendStatus(204);

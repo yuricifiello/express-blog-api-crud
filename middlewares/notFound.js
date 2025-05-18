@@ -1,7 +1,8 @@
 const notFound = (req, res, next) => {
-  const error = new Error("Page not found");
-  error.statusCode = 404;
-  throw error;
+  // MIDDLEWARE CHIAMATO SE NUSSEUNA ROUTE PRECEDENTE HA GESTITO LA RICHIESTA
+  const error = new Error("Page not found"); // CREIAMO UN OGGETTO ERROR CON MESSAGGIO PERSONALIZZATO
+  error.statusCode = 404; // AGGIUNGIAMO UNA PROPRIETA STATUSCODE (NON ESISTE DI DEFAUL SU ERROR)
+  throw error; // ANZICHE USARE NEST(ERROR), LANCIAMO DIRETTAMENTE L'ERRORE (CA VATTURATO UN ERROR HANDLER)
 };
 
 module.exports = notFound;
