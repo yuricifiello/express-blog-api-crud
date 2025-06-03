@@ -3,10 +3,18 @@ const app = express(); //creiamo un'applicazione express
 const appPort = 3000; // porta su cui il server ci ascolta
 const appUrl = `http://localhost:${appPort}`;
 const postsRouter = require("./routers/posts"); //importiamo il router per i post che gestisce le rotte GET,POST
+const cors = require("cors");
 // MIDDLEWARE
 const notFound = require("./middlewares/notFound"); // GESTISCE LE ROTTE NON TROVATE (404)
 const checkTimeMiddleware = require("./middlewares/checkTime"); // STAPA DATA/ORA DELLA RICHIESTA
 const errorHandler = require("./middlewares/errorHandler"); //GESTISCE ERRORE GLOBALI
+
+//COURS
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 
 // File statici
 app.use(express.static("public")); // SERVONO I FILE STATICI (IMMAGINI, CSS,) PRESENTI NELLA CARTELLA "PUBLIC"
@@ -15,7 +23,7 @@ app.use(express.json()); // PARSING DEL CORPO JSON DELLE RICHIESTE (REQ.BODY) IN
 // checktime
 app.use(checkTimeMiddleware); // LOGGA METODO, PATH E ORARIO PER OGNI RICHIESTA
 
-app.get("/", (res, req) => {
+app.get("/", (req, res) => {
   // "/" ROTTA BASSE DELL'APPLICAZIONE CHE RISPONDE CON UN MESSAGGIO DI BENVENUTO
   res.json("Benvenuto nel mio blog");
 });
